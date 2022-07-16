@@ -4,17 +4,17 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/js/index.js",
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "dist")
+    filename: "js/main.js",
+    path: path.resolve(__dirname, "docs"),
   },
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./docs",
   },
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "src/index.html"
-    })
+      template: "src/index.html",
+    }),
   ],
   module: {
     rules: [
@@ -24,10 +24,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"]
-          }
-        }
-      }
-    ]
-  }
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+    ],
+  },
 };
