@@ -1,26 +1,31 @@
 require("@babel/polyfill");
 import Search from "./model/Search";
-
+import { elements, renderLoader, clearLoader } from "./view/base";
+import * as searchView from "./view/searchView";
 const state = {};
 const controlSearch = async () => {
   //1 webees hailtiin tulhuur ug gargaj awna
-  const query = "pizza";
+  const query = searchView.getInput();
 
   if (query) {
     //2 Shineer hailtiin object uusgej ogno
     state.search = new Search(query);
 
     //3 Hailt hiihed zoriulj interface UI beldene
-
+    searchView.clearSearchQuery();
+    searchView.clearSearchResult();
+    renderLoader(elements.searchResDiv);
     //4 Hailt guitsetgene
     await state.search.doSearch();
 
     //5 Ur dun haruulna
-    console.log(state.search.result);
+    clearLoader();
+    if (state.search.result === undefined) alert("Ilertsgui");
+    else searchView.renderRecipes(state.search.result);
   }
 };
 
-document.querySelector(".search").addEventListener("submit", (e) => {
+elements.searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
   controlSearch();
 });
