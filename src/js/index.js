@@ -2,6 +2,8 @@ require("@babel/polyfill");
 import Search from "./model/Search";
 import { elements, renderLoader, clearLoader } from "./view/base";
 import * as searchView from "./view/searchView";
+import Recipe from "./model/Recipe";
+
 const state = {};
 const controlSearch = async () => {
   //1 webees hailtiin tulhuur ug gargaj awna
@@ -29,3 +31,15 @@ elements.searchForm.addEventListener("submit", (e) => {
   e.preventDefault();
   controlSearch();
 });
+
+elements.pageButtons.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-inline");
+  if (btn) {
+    const gotoPageNumber = parseInt(btn.dataset.goto);
+    searchView.clearSearchResult();
+    searchView.renderRecipes(state.search.result, gotoPageNumber);
+  }
+});
+
+const r = new Recipe(47746);
+r.getRecipe();
